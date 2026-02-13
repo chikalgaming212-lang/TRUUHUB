@@ -1,6 +1,6 @@
 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
 
-local repo = "https://raw.githubusercontent.com/USERNAME/REPO/main/"
+local repo = "https://github.com/chikalgaming212-lang/TRUUHUB/main/"
 local currentVersion = "1.0.0"
 
 local success, onlineVersion = pcall(function()
