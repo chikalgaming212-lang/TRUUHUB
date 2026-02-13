@@ -13,7 +13,7 @@ mt.__namecall = newcclosure(function(self, ...)
 end)
 
 -- Load GUI
-loadstring(game:HttpGet("https://raw.githubusercontent.com/USERNAME/REPO/main/GUI.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/chikalgaming212-lang/TRUUHUB/refs/heads/main/GUI.lua"))()
 
 -- Load Script Utama
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/AutoBounty.lua"))()
