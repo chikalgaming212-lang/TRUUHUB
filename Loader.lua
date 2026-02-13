@@ -1,53 +1,15 @@
-getgenv().Setting = {
-    Team = "Pirates",
+repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
 
-    ["Auto Click"] = true,
-    ["Delay Click"] = 0.3,
+local repo = "https://raw.githubusercontent.com/USERNAME/REPO/main/"
+local currentVersion = "1.0.0"
 
-    EnableWeapon = {
-        Fruit = false,
-        Melee = true,
-        Sword = true,
-        Gun = false
-    },
+local success, onlineVersion = pcall(function()
+    return game:HttpGet(repo .. "Version.txt")
+end)
 
-    Melee = {
-        Z = {Enable = true, HoldTime = 0.1},
-        X = {Enable = true, HoldTime = 0.1},
-        C = {Enable = true, HoldTime = 0.1},
-        ChangeDelay = 0.1
-    },
+if success and onlineVersion and onlineVersion:gsub("%s","") ~= currentVersion then
+    warn("Update tersedia! Versi:", onlineVersion)
+end
 
-    Sword = {
-        Z = {Enable = true, HoldTime = 0.1},
-        X = {Enable = true, HoldTime = 0.1},
-        ChangeDelay = 0.2
-    },
-
-    Fruit = {
-        Z = {Enable = true, HoldTime = 0.1},
-        X = {Enable = true, HoldTime = 0.1},
-        C = {Enable = true, HoldTime = 0.1},
-        F = {Enable = true, HoldTime = 0.1},
-        ChangeDelay = 0.5
-    },
-
-    LockBounty = {
-        Enable = false,
-        Min = 0,
-        Max = 30000000
-    },
-
-    Setting = {
-        UseRaceV3 = true,
-        UseRaceV4 = true,
-        AutoServerHop = true,
-        ["Fast Attack"] = true
-    },
-
-    AimBot = {
-        Enable = true,
-        AimCamera = {Enable = true, MaxDistance = 300},
-        LockAim = {Enable = true}
-    }
-}
+loadstring(game:HttpGet(repo .. "Settings.lua"))()
+loadstring(game:HttpGet(repo .. "Main.lua"))()
