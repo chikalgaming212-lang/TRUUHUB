@@ -1,40 +1,55 @@
 local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local plr = Players.LocalPlayer
 
-local gui = Instance.new("ScreenGui", player.PlayerGui)
-gui.Name = "AutoBountyGUI"
+local gui = Instance.new("ScreenGui", plr.PlayerGui)
+gui.Name = "TRUUHUB"
 
-local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.fromOffset(260, 220)
-frame.Position = UDim2.fromScale(0.02, 0.3)
-frame.BackgroundColor3 = Color3.fromRGB(25,25,25)
-frame.Active = true
-frame.Draggable = true
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.fromOffset(460,300)
+main.Position = UDim2.fromScale(0.03,0.3)
+main.BackgroundColor3 = Color3.fromRGB(20,20,20)
+main.Active = true
+main.Draggable = true
 
-local function Toggle(text, default, callback, y)
-    local btn = Instance.new("TextButton", frame)
-    btn.Size = UDim2.new(1, -20, 0, 30)
-    btn.Position = UDim2.fromOffset(10, y)
-    btn.Text = text .. ": " .. (default and "ON" or "OFF")
-    btn.BackgroundColor3 = Color3.fromRGB(40,40,40)
-    btn.TextColor3 = Color3.new(1,1,1)
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1,0,0,30)
+title.Text = "TRUU HUB | Auto Bounty"
+title.TextColor3 = Color3.new(1,1,1)
+title.BackgroundColor3 = Color3.fromRGB(35,35,35)
 
+local function Toggle(parent,text,default,y,cb)
+    local b = Instance.new("TextButton", parent)
+    b.Size = UDim2.new(1,-20,0,30)
+    b.Position = UDim2.fromOffset(10,y)
+    b.BackgroundColor3 = Color3.fromRGB(45,45,45)
+    b.TextColor3 = Color3.new(1,1,1)
     local state = default
-    btn.MouseButton1Click:Connect(function()
+    b.Text = text..": "..(state and "ON" or "OFF")
+    b.MouseButton1Click:Connect(function()
         state = not state
-        btn.Text = text .. ": " .. (state and "ON" or "OFF")
-        callback(state)
+        b.Text = text..": "..(state and "ON" or "OFF")
+        cb(state)
     end)
 end
 
-Toggle("Auto Click", Setting["Auto Click"], function(v)
-    Setting["Auto Click"] = v
-end, 10)
+Toggle(main,"AimBot",Setting.AimBot.Enable,40,function(v)
+    Setting.AimBot.Enable=v
+end)
 
-Toggle("AimBot", Setting.AimBot.Enable, function(v)
-    Setting.AimBot.Enable = v
-end, 50)
+Toggle(main,"Show FOV",Setting.AimBot.ShowFOV,80,function(v)
+    Setting.AimBot.ShowFOV=v
+end)
 
-Toggle("Fast Attack", Setting.Setting["Fast Attack"], function(v)
-    Setting.Setting["Fast Attack"] = v
-end, 90)
+-- FOV Circle
+local cam = workspace.CurrentCamera
+local circle = Drawing.new("Circle")
+circle.Thickness = 2
+circle.Filled = false
+circle.Color = Color3.fromRGB(255,255,255)
+
+RunService.RenderStepped:Connect(function()
+    circle.Visible = Setting.AimBot.ShowFOV
+    circle.Radius = Setting.AimBot.FOV
+    circle.Position = Vector2.new(cam.ViewportSize.X/2, cam.ViewportSize.Y/2)
+end)
