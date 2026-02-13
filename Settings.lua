@@ -51,3 +51,4 @@ getgenv().Setting = {
         LockAim = {Enable = true}
     }
 }
+
